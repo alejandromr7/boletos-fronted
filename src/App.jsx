@@ -26,15 +26,15 @@ const App = () => {
             <Route path='/' element={<Layout />}>
               <Route index element={<BoletosPublicos />} />
               <Route path='login' element={<IniciarSesion />} />
-              <Route path='reservar-boleto/:id' element={<BoletoPublico />} />
+              <Route path='reservar-boleto/:no' element={<BoletoPublico />} />
               <Route path='privado/crear-cuenta' element={<NuevoUsuario />} />
-              <Route path='confirmar/:id' element={<ConfirmarCuenta />} />
+              <Route path='confirmar/:no' element={<ConfirmarCuenta />} />
             </Route>
 
             <Route path='/admin' element={<RutaProtegida />} >
               <Route index element={<Principal />} />
-              <Route path='ver-boleto/:id' element={<BoletoInfo />} />
-              <Route path='editar-boleto/:id' element={<EditarBoleto />} />
+              <Route path='ver-boleto/:no' element={<BoletoInfo />} />
+              <Route path='editar-boleto/:no' element={<EditarBoleto />} />
               <Route path='perfil' element={<PerfilUsuario />} />
               <Route path='dashboard' element={<DashBorad />} />
             </Route>

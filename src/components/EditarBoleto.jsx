@@ -8,9 +8,13 @@ import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 const EditarBoleto = () => {
 
     const navigate = useNavigate();
-    const { id } = useParams();
+    const { no } = useParams();
+
+    console.log(no);
 
     const { boleto, setBoleto, setConsulta } = useBoletos();
+
+    const { nombre, pagado, disponible } = boleto;
 
     const onChange = e => {
         setBoleto({
@@ -21,16 +25,14 @@ const EditarBoleto = () => {
 
     useEffect(() => {
         const obtenerBoleto = async () => {
-            const { data } = await clienteAxios(`http://192.168.0.12:4000/api/boletos/${id}`);
-            setBoleto(data);
+            const { data } = await clienteAxios(`/boletos/${no}`);
             console.log(data);
+            setBoleto(data);
 
         }
 
         obtenerBoleto();
     }, [])
-
-
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -42,7 +44,7 @@ const EditarBoleto = () => {
         }
 
         try {
-            const { data } = await clienteAxios.put(`/boletos/${id}`, { nombre, pagado, disponible });
+            const { data } = await clienteAxios.put(`/boletos/${no}`, { nombre, pagado, disponible });
             console.log(data);
             setConsulta(true);
             navigate('/admin')
@@ -57,7 +59,7 @@ const EditarBoleto = () => {
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sx={{ mt: 3 }}>
-                        <Typography sx={{ fontSize: 30 }} >No. de boleto: {id}</Typography>
+                        <Typography sx={{ fontSize: 30 }} >No. de boleto: {no}</Typography>
                     </Grid>
                 </Grid>
 
@@ -69,7 +71,7 @@ const EditarBoleto = () => {
                             label='Nombre completo'
                             placeholder='nombre completo'
                             fullWidth
-                            value={boleto.nombre === null ? '' : boleto.nombre}
+                            value={nombre === null ? '' : nombre}
                             onChange={onChange}
                         />
                     </Grid>
@@ -100,7 +102,7 @@ const EditarBoleto = () => {
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             label="Pago"
-                            value={boleto.pagado}
+                            value={pagado}
                             onChange={onChange}
                         >
                             <MenuItem value={true}>Pagado</MenuItem>

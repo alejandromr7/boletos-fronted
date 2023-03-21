@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext } from 'react';
+import clienteAxios from '../config/axios';
 
 
 const BoletosContext = createContext();
@@ -14,13 +15,12 @@ const BoletosProvider = ({ children }) => {
         pagado: false,
         fecha: '',
     });
-    const [alertClasses, setAlerta] = useState({});
+
     const [consulta, setConsulta] = useState(true);
 
     useEffect(() => {
         const obtenerBoletos = async () => {
-            const boletos = await fetch('http://192.168.0.12:4000/api/boletos');
-            const data = await boletos.json();
+            const { data } = await clienteAxios('/boletos');
             setBoletos(data);
         }
 
